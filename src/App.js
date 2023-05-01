@@ -37,24 +37,34 @@ export function Board({ xIsNext, squares, onPlay }) {
     onPlay(nextSquares)
   }
 
+  function renderSquare(i) {
+    return (
+        <Square key={i} value={squares[i]} onSquareClick={() => handleClick(i)} />
+    )
+  }
+
+  function BoardRow() {
+    let boardSquares = []
+
+    for (let row = 0; row < 3; row++) {
+      let boardRow = []
+      for (let col = 0; col < 3; col++) {
+        boardRow.push(renderSquare((row * 3) + col))
+      }
+      boardSquares.push(<div className="board-row" key={row}>{boardRow}</div>)
+    }
+
+    return (
+        <>
+          {boardSquares}
+        </>
+    )
+  }
+
   return (
       <>
-        <div className='status' >{status}</div>
-        <div className='board-row'>
-          <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-          <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-          <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-        </div>
-        <div className='board-row'>
-          <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-          <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-          <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-        </div>
-        <div className='board-row'>
-          <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-          <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-          <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-        </div>
+        <div className='status'>{status}</div>
+        < BoardRow />
       </>
   )
 }
@@ -89,7 +99,11 @@ export default function Game() {
           <button onClick={() => jumpTo(move)}>{description}</button>
         </li>
     )
-  });
+  })
+
+  function SortMoves() {
+    // TODO
+  }
 
   return (
       <div className='game'>
@@ -97,7 +111,12 @@ export default function Game() {
           <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
         </div>
         <div className='game-info'>
-          <ol>{moves}</ol>
+
+          <ol>
+            <li>You are at move #{currentMove}</li>
+            <li><button onClick={SortMoves}></button></li>
+            {moves}
+          </ol>
         </div>
       </div>
   )
