@@ -86,13 +86,9 @@ export default function Game() {
   }
 
   const moves = history.map((squares, move) => {
-    let description
-
-    if (move > 0) {
-      description = 'Go to move #' + move
-    } else {
-      description = 'Go to game start'
-    }
+    let description = move
+    ? 'Go to move #' + move
+    : 'Go to game start'
 
     return (
         <li key={move}>
@@ -100,10 +96,6 @@ export default function Game() {
         </li>
     )
   })
-
-  function SortMoves() {
-    // TODO
-  }
 
   return (
       <div className='game'>
@@ -114,7 +106,7 @@ export default function Game() {
 
           <ol>
             <li>You are at move #{currentMove}</li>
-            <li><button onClick={SortMoves}></button></li>
+            <li><button onClick={() => console.log(moves)}>Sort moves</button></li>
             {moves}
           </ol>
         </div>
