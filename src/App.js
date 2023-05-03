@@ -3,7 +3,7 @@ import { useState } from 'react'
 function Square({ value, onSquareClick }) {
   return (
       <button
-          className='square'
+          className='square w-9 h-9 font-bold leading-8 text-center float-left bg-white'
           onClick={onSquareClick}
       >
         {value}
@@ -51,7 +51,7 @@ export function Board({ xIsNext, squares, onPlay }) {
       for (let col = 0; col < 3; col++) {
         boardRow.push(renderSquare((row * 3) + col))
       }
-      boardSquares.push(<div className="board-row" key={row}>{boardRow}</div>)
+      boardSquares.push(<div key={row}>{boardRow}</div>)
     }
 
     return (
@@ -63,7 +63,7 @@ export function Board({ xIsNext, squares, onPlay }) {
 
   return (
       <>
-        <div className='status'>{status}</div>
+        <div className='mb-2.5'>{status}</div>
         < BoardRow />
       </>
   )
@@ -92,21 +92,21 @@ export default function Game() {
 
     return (
         <li key={move}>
-          <button onClick={() => jumpTo(move)}>{description}</button>
+          <button className='btn' onClick={() => jumpTo(move)}>{description}</button>
         </li>
     )
   })
 
   return (
-      <div className='game'>
-        <div className='game-board'>
+      <div className='container mx-auto flex flex-row justify-center'>
+        <div>
           <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
         </div>
-        <div className='game-info'>
+        <div className='ml-5'>
 
           <ol>
-            <li>You are at move #{currentMove}</li>
-            <li><button onClick={() => console.log(moves)}>Sort moves</button></li>
+            <li className='list-item'>You are at move #{currentMove}</li>
+            <li><button className='btn' onClick={() => console.log(moves)}>Sort moves</button></li>
             {moves}
           </ol>
         </div>
