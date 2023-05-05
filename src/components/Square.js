@@ -1,5 +1,6 @@
 export default function Square({ value, onSquareClick, winningSquare }) {
     const winningSquareStyle = {
+        color: '#fff',
         backgroundColor: '#b8e387'
     }
 
