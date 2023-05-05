@@ -1,11 +1,13 @@
-import Square from "./Square";
+import Square from './Square'
 
 export default function Board({ xIsNext, squares, onPlay }) {
     const winner = calculateWinner(squares)
     let status
 
     if (winner) {
-        status = 'Winner: ' + winner
+        status = 'Winner: ' + winner.winner
+    } else if(!squares.includes(null)) {
+        status = 'Nobody won'
     } else {
         status = 'Next player: ' + (xIsNext ? 'X' : 'O')
     }
@@ -27,8 +29,14 @@ export default function Board({ xIsNext, squares, onPlay }) {
     }
 
     function renderSquare(i) {
+        let winningSquare = winner && winner.winningSquares.includes(i) ? true : false
+
         return (
-            <Square key={i} value={squares[i]} onSquareClick={() => handleClick(i)} />
+            <Square
+                key={i}
+                value={squares[i]}
+                onSquareClick={() => handleClick(i)}
+                winningSquare={winningSquare} />
         )
     }
 
@@ -64,7 +72,10 @@ export default function Board({ xIsNext, squares, onPlay }) {
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i]
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                return squares[a]
+                return {
+                    winner: squares[a],
+                    winningSquares: lines[i]
+                }
             }
         }
         return null
